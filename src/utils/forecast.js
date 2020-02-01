@@ -13,7 +13,7 @@ request({url,json:true},(error,{ body })=>{
         callback('unable to find location!',undefined)
     }
     else{
-        callback(undefined,body.daily.data[0].summary+' it is currently '+body.currently.temperature+' degree out there,Threre is '+body.currently.precipProbability+'% chance of rain.')
+        callback(undefined,body.daily.data[0].summary+' it is currently '+body.currently.temperature+' degree out there,The temperature high is '+body.daily.data[0].temperatureHigh+',with a low of '+body.daily.data[0].temperatureLow+'. Threre is '+body.currently.precipProbability+'% chance of rain.')
     }
 })
 }
