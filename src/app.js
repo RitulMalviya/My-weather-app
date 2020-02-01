@@ -31,7 +31,7 @@ app.use(express.static(publicdir))
 // })
 app.get('',(req,res)=>{
     res.render('index',{
-        title:'weather-app',
+        title:'Weather',
         name:'Ritul Malviya'
     })
 })
