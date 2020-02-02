@@ -38,10 +38,32 @@ input{
     border: 1px solid #cccccc;
     padding: 8px;
 }
-button{
+#btn{
     cursor: pointer;
     border: 1px solid #888888;
     background: #888888;
     padding: 8px;
     color: white;
 }
+#map{
+    height:400px;
+    width:100%;
+  }
+  /* #map-layer {
+	margin: 20px 0px;
+	max-width: 600px;
+	min-height: 400;
+}
+#btnAction {
+	background: #3878c7;
+    padding: 10px 40px;
+    border: #3672bb 1px solid;
+    border-radius: 2px;
+    color: #FFF;
+    font-size: 0.9em;
+    cursor:pointer;
+    display:block;
+}
+#btnAction:disabled {
+    background: #6c99d2;
+} */

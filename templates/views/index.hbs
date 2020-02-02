@@ -7,16 +7,110 @@
     </head>
     <body>
         <div class="main-content">
-        {{>headers}}
-        <p>Use this site to get your weather!</p>
+        {{>headers}}   <p>Use this site to get your weather!</p>
         <form>
             <input placeholder="Location">
-            <button>Search</button>
+            <button id="btn">Search</button>
         </form>
+        <br>
+         <button onclick="getLocation()" id="btn">Get Current Location</button>
         <p id="message-1"></p>
         <p id="message-2"></p>
         </div>
         <p>{{>footer}}</p>
         <script src="/js/app.js"></script>
+        <h3>My Google Map</h3>
+  <div id="map"></div>
+  <script>
+var lati,longi;
+const loc=document.querySelector('input');
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+  lati=position.coords.latitude;
+  longi=position.coords.longitude;
+  loc.value=(longi+','+lati);
+}
+  function initMap(){
+      // Map options
+      var options = {
+        zoom:8,
+        center:{lat:23.2599,lng:77.4126}
+      }
+
+      // New map
+      var map = new google.maps.Map(document.getElementById('map'), options);
+
+      // Listen for click on map
+      google.maps.event.addListener(map, 'click', function(event){
+        // Add marker
+        addMarker({coords:event.latLng});
+        var myLatLng = event.latLng;
+     lati = myLatLng.lat();
+     longi = myLatLng.lng();
+     loc.value=(longi+','+lati);
+      });
+
+
+
+      var markers = [
+        {
+          coords:{lat:23.2599,lng:77.4126},
+          iconImage:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+          content:'<h2>Bhopal jn</h2>'
+        },
+        {
+          coords:{lat:23.5236,lng:77.8140},
+          content:'<h2>Vidisha</h>'
+        },
+        {
+          coords:{lat:22.7196,lng:75.8577}
+        }
+      ];
+
+      // Loop through markers
+      for(var i = 0;i < markers.length;i++){
+        // Add marker
+        addMarker(markers[i]);
+      }
+
+      // Add Marker Function
+      function addMarker(props){
+        var marker = new google.maps.Marker({
+          position:props.coords,
+          map:map,
+          //icon:props.iconImage
+        });
+
+        // Check for customicon
+        if(props.iconImage){
+          // Set icon image
+          marker.setIcon(props.iconImage);
+        }
+
+        // Check content
+        if(props.content){
+          var infoWindow = new google.maps.InfoWindow({
+            content:props.content
+          });
+
+          marker.addListener('click', function(){
+            infoWindow.open(map, marker);
+          });
+        }
+      }
+    }  
+     
+  </script>
+     
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATyg2fUHEF60L9-BcenpjB5L7NgRb1mmM&callback=initMap">
+    </script>
     </body>
 </html>
