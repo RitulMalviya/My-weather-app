@@ -19,13 +19,13 @@ fetch('/weather?address='+location).then((response)=>{
         if(data.error)
         {
             messageOne.textContent=data.error
-        console.log(data.error)
+        //console.log(data.error)
         }
         else{
             messageOne.textContent=data.location
             messageTwo.textContent=data.forecast
-            console.log(data.location)
-            console.log(data.forecast)
+            //console.log(data.location)
+            //console.log(data.forecast)
         }
     })
 })

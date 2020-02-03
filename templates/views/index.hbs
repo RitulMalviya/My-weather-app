@@ -13,7 +13,7 @@
             <button id="btn">Search</button>
         </form>
         <br>
-         <button onclick="getLocation()" id="btn">Get Current Location</button>
+         <button onclick="getLocation()" id="btn" class="cur">Get Current Location</button>
         <p id="message-1"></p>
         <p id="message-2"></p>
         </div>
@@ -23,7 +23,9 @@
   <div id="map"></div>
   <script>
 var lati,longi;
-const loc=document.querySelector('input');
+const weatherMap=document.querySelector('#map');
+const messageone=document.querySelector('#message-1');
+const messagetwo=document.querySelector('#message-2');
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
@@ -35,7 +37,24 @@ function getLocation() {
 function showPosition(position) {
   lati=position.coords.latitude;
   longi=position.coords.longitude;
-  loc.value=(longi+','+lati);
+  
+messageone.textContent='Loading...'
+messagetwo.textContent=''
+fetch('/weather?address='+longi+','+lati).then((response)=>{
+    response.json().then((data)=>{
+        if(data.error)
+        {
+            messageone.textContent=data.error
+        //console.log(data.error)
+        }
+        else{
+            messageone.textContent=data.location
+            messagetwo.textContent=data.forecast
+            //console.log(data.location)
+            //console.log(data.forecast)
+        }
+    })
+})
 }
   function initMap(){
       // Map options
@@ -48,14 +67,32 @@ function showPosition(position) {
       var map = new google.maps.Map(document.getElementById('map'), options);
 
       // Listen for click on map
-      google.maps.event.addListener(map, 'click', function(event){
+      google.maps.event.addListener(map, 'click', function(e){
         // Add marker
-        addMarker({coords:event.latLng});
-        var myLatLng = event.latLng;
+        addMarker({coords:e.latLng});
+        var myLatLng = e.latLng;
      lati = myLatLng.lat();
      longi = myLatLng.lng();
-     loc.value=(longi+','+lati);
-      });
+     //weatherMap.addEventListener('click',(e)=>{
+    //e.preventDefault()
+messageone.textContent='Loading...'
+messagetwo.textContent=''
+fetch('/weather?address='+longi+','+lati).then((response)=>{
+    response.json().then((data)=>{
+        if(data.error)
+        {
+            messageone.textContent=data.error
+        //console.log(data.error)
+        }
+        else{
+            messageone.textContent=data.location
+            messagetwo.textContent=data.forecast
+            //console.log(data.location)
+            //console.log(data.forecast)
+        }
+    })
+})
+});
 
 
 
