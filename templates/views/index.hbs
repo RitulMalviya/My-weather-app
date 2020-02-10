@@ -1,153 +1,126 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Weather</title>
-        <link rel="icon" href="/img/weather.png">
-            <link rel="stylesheet" href="/css/styles.css">
+      <link rel="stylesheet" href="../../public/css/styles.css">
     </head>
     <body>
         <div class="main-content">
-        {{>headers}}   <p>Use this site to get your weather!</p>
-        <form>
+        {{>headers}}
+        {{!-- <form>
             <input placeholder="Location">
             <button id="btn">Search</button>
-        </form>
+        </form> --}}
+
+
+			<div class="hero" data-bg-image="images/banner.png" style="background-image: url('img/banner.png');">
+				<div class="container">
+					<form action="#" class="find-location">
+						<input type="text" placeholder="Find your location...">
+						<input type="submit" value="Find">
+					</form>
+
+				</div>
+			</div>
+			<div class="forecast-table">
+				<div class="container">
+					<div class="forecast-container">
+						<div class="today forecast">
+							<div class="forecast-header">
+								<div class="day">Monday</div>
+								<div class="date">6 Oct</div>
+							</div> <!-- .forecast-header -->
+							<div class="forecast-content">
+								<div class="location" id='loc'>New York</div>
+								<div class="degree">
+									<div class="num"><span id='day-1'>23</span><sup>o</sup>C</div>
+									<div class="forecast-icon">
+										<img src="img/icons/icon-1.svg" alt="" width=90>
+									</div>	
+								</div>
+								<span><img src="img/icon-umberella.png" alt="">20%</span>
+								<span><img src="img/icon-wind.png" alt=""><span id='wind-1'>18</span>km/h</span>
+								<span><img src="img/icon-compass.png" alt="">East</span>
+							</div>
+						</div>
+						<div class="forecast">
+							<div class="forecast-header">
+								<div class="day">Tuesday</div>
+							</div> <!-- .forecast-header -->
+							<div class="forecast-content">
+								<div class="forecast-icon">
+									<img src="img/icons/icon-3.svg" alt="" width=48>
+								</div>
+								<div class="degree"><span id='day-2'>23</span><sup>o</sup>C</div>
+								<small id='day2'>18<sup>o</sup></small>
+							</div>
+						</div>
+						<div class="forecast">
+							<div class="forecast-header">
+								<div class="day">Wednesday</div>
+							</div> <!-- .forecast-header -->
+							<div class="forecast-content">
+								<div class="forecast-icon">
+									<img src="img/icons/icon-5.svg" alt="" width=48>
+								</div>
+								<div class="degree"><span id='day-3'>23</span><sup>o</sup>C</div>
+								<small id='day3'>18<sup>o</sup></small>
+							</div>
+						</div>
+						<div class="forecast">
+							<div class="forecast-header">
+								<div class="day">Thursday</div>
+							</div> <!-- .forecast-header -->
+							<div class="forecast-content">
+								<div class="forecast-icon">
+									<img src="img/icons/icon-7.svg" alt="" width=48>
+								</div>
+								<div class="degree"><span id='day-4'>23</span><sup>o</sup>C</div>
+								<small id='day4'>18<sup>o</sup></small>
+							</div>
+						</div>
+						<div class="forecast">
+							<div class="forecast-header">
+								<div class="day">Friday</div>
+							</div> <!-- .forecast-header -->
+							<div class="forecast-content">
+								<div class="forecast-icon">
+									<img src="img/icons/icon-12.svg" alt="" width=48>
+								</div>
+								<div class="degree"><span id='day-5'>23</span><sup>o</sup>C</div>
+								<small id='day5'>18<sup>o</sup></small>
+							</div>
+						</div>
+						<div class="forecast">
+							<div class="forecast-header">
+								<div class="day">Saturday</div>
+							</div> <!-- .forecast-header -->
+							<div class="forecast-content">
+								<div class="forecast-icon">
+									<img src="img/icons/icon-13.svg" alt="" width=48>
+								</div>
+								<div class="degree"><span id='day-6'>23</span><sup>o</sup>C</div>
+								<small id='day6'>18<sup>o</sup></small>
+							</div>
+						</div>
+						<div class="forecast">
+							<div class="forecast-header">
+								<div class="day">Sunday</div>
+							</div> <!-- .forecast-header -->
+							<div class="forecast-content">
+								<div class="forecast-icon">
+									<img src="img/icons/icon-14.svg" alt="" width=48>
+								</div>
+								<div class="degree"><span id='day-7'>23</span><sup>o</sup>C</div>
+								<small id='day7'>18<sup>o</sup></small>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+ {{!-- <p id="message-1"></p>
+        <p id="message-2"></p> --}}
         <br>
-         <button onclick="getLocation()" id="btn" class="cur">Get Current Location</button>
-        <p id="message-1"></p>
-        <p id="message-2"></p>
         </div>
-        <p>{{>footer}}</p>
         <script src="/js/app.js"></script>
-        <h3>My Google Map</h3>
-  <div id="map"></div>
-  <script>
-var lati,longi;
-const weatherMap=document.querySelector('#map');
-const messageone=document.querySelector('#message-1');
-const messagetwo=document.querySelector('#message-2');
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else { 
-    x.innerHTML = "Geolocation is not supported by this browser.";
-  }
-}
-
-function showPosition(position) {
-  lati=position.coords.latitude;
-  longi=position.coords.longitude;
-  
-messageone.textContent='Loading...'
-messagetwo.textContent=''
-fetch('/weather?address='+longi+','+lati).then((response)=>{
-    response.json().then((data)=>{
-        if(data.error)
-        {
-            messageone.textContent=data.error
-        //console.log(data.error)
-        }
-        else{
-            messageone.textContent=data.location
-            messagetwo.textContent=data.forecast
-            //console.log(data.location)
-            //console.log(data.forecast)
-        }
-    })
-})
-}
-  function initMap(){
-      // Map options
-      var options = {
-        zoom:8,
-        center:{lat:23.2599,lng:77.4126}
-      }
-
-      // New map
-      var map = new google.maps.Map(document.getElementById('map'), options);
-
-      // Listen for click on map
-      google.maps.event.addListener(map, 'click', function(e){
-        // Add marker
-        addMarker({coords:e.latLng});
-        var myLatLng = e.latLng;
-     lati = myLatLng.lat();
-     longi = myLatLng.lng();
-     //weatherMap.addEventListener('click',(e)=>{
-    //e.preventDefault()
-messageone.textContent='Loading...'
-messagetwo.textContent=''
-fetch('/weather?address='+longi+','+lati).then((response)=>{
-    response.json().then((data)=>{
-        if(data.error)
-        {
-            messageone.textContent=data.error
-        //console.log(data.error)
-        }
-        else{
-            messageone.textContent=data.location
-            messagetwo.textContent=data.forecast
-            //console.log(data.location)
-            //console.log(data.forecast)
-        }
-    })
-})
-});
-
-
-
-      var markers = [
-        {
-          coords:{lat:23.2599,lng:77.4126},
-          iconImage:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-          content:'<h2>Bhopal jn</h2>'
-        },
-        {
-          coords:{lat:23.5236,lng:77.8140},
-          content:'<h2>Vidisha</h>'
-        },
-        {
-          coords:{lat:22.7196,lng:75.8577}
-        }
-      ];
-
-      // Loop through markers
-      for(var i = 0;i < markers.length;i++){
-        // Add marker
-        addMarker(markers[i]);
-      }
-
-      // Add Marker Function
-      function addMarker(props){
-        var marker = new google.maps.Marker({
-          position:props.coords,
-          map:map,
-          //icon:props.iconImage
-        });
-
-        // Check for customicon
-        if(props.iconImage){
-          // Set icon image
-          marker.setIcon(props.iconImage);
-        }
-
-        // Check content
-        if(props.content){
-          var infoWindow = new google.maps.InfoWindow({
-            content:props.content
-          });
-
-          marker.addListener('click', function(){
-            infoWindow.open(map, marker);
-          });
-        }
-      }
-    }  
-     
-  </script>
-     
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATyg2fUHEF60L9-BcenpjB5L7NgRb1mmM&callback=initMap">
-    </script>
     </body>
 </html>

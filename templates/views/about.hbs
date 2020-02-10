@@ -8,10 +8,289 @@
     <body>
         <div class="main-content">
  {{>headers}}
-     <p>This site was created by Ritul Malviya.it uses data from mapbox.com and darksky.net</p>
-        <img class="potrait" src="/img/me.jpg" alt="my">
+ <script src="/js/app.js"></script>
+        <div class="forecast-table">
+				<div class="container">
+					<div class="forecast-container">
+						<div class="today forecast">
+							<div class="forecast-header">
+								<div class="day">Monday</div>
+								<div class="date">6 Oct</div>
+							</div> <!-- .forecast-header -->
+							<div class="forecast-content">
+								<div class="location" id='loc'>New York</div>
+								<div class="degree">
+									<div class="num"><span id='day-1'>23</span><sup>o</sup>C</div>
+									<div class="forecast-icon">
+										<img src="img/icons/icon-1.svg" alt="" width=90>
+									</div>	
+								</div>
+								<span><img src="img/icon-umberella.png" alt="">20%</span>
+								<span><img src="img/icon-wind.png" alt=""><span id='wind-1'>18</span>km/h</span>
+								<span><img src="img/icon-compass.png" alt="">East</span>
+							</div>
+						</div>
+						<div class="forecast">
+							<div class="forecast-header">
+								<div class="day">Tuesday</div>
+							</div> <!-- .forecast-header -->
+							<div class="forecast-content">
+								<div class="forecast-icon">
+									<img src="img/icons/icon-3.svg" alt="" width=48>
+								</div>
+								<div class="degree"><span id='day-2'>23</span><sup>o</sup>C</div>
+								<small id='day2'>18<sup>o</sup></small>
+							</div>
+						</div>
+						<div class="forecast">
+							<div class="forecast-header">
+								<div class="day">Wednesday</div>
+							</div> <!-- .forecast-header -->
+							<div class="forecast-content">
+								<div class="forecast-icon">
+									<img src="img/icons/icon-5.svg" alt="" width=48>
+								</div>
+								<div class="degree"><span id='day-3'>23</span><sup>o</sup>C</div>
+								<small id='day3'>18<sup>o</sup></small>
+							</div>
+						</div>
+						<div class="forecast">
+							<div class="forecast-header">
+								<div class="day">Thursday</div>
+							</div> <!-- .forecast-header -->
+							<div class="forecast-content">
+								<div class="forecast-icon">
+									<img src="img/icons/icon-7.svg" alt="" width=48>
+								</div>
+								<div class="degree"><span id='day-4'>23</span><sup>o</sup>C</div>
+								<small id='day4'>18<sup>o</sup></small>
+							</div>
+						</div>
+						<div class="forecast">
+							<div class="forecast-header">
+								<div class="day">Friday</div>
+							</div> <!-- .forecast-header -->
+							<div class="forecast-content">
+								<div class="forecast-icon">
+									<img src="img/icons/icon-12.svg" alt="" width=48>
+								</div>
+								<div class="degree"><span id='day-5'>23</span><sup>o</sup>C</div>
+								<small id='day5'>18<sup>o</sup></small>
+							</div>
+						</div>
+						<div class="forecast">
+							<div class="forecast-header">
+								<div class="day">Saturday</div>
+							</div> <!-- .forecast-header -->
+							<div class="forecast-content">
+								<div class="forecast-icon">
+									<img src="img/icons/icon-13.svg" alt="" width=48>
+								</div>
+								<div class="degree"><span id='day-6'>23</span><sup>o</sup>C</div>
+								<small id='day6'>18<sup>o</sup></small>
+							</div>
+						</div>
+						<div class="forecast">
+							<div class="forecast-header">
+								<div class="day">Sunday</div>
+							</div> <!-- .forecast-header -->
+							<div class="forecast-content">
+								<div class="forecast-icon">
+									<img src="img/icons/icon-14.svg" alt="" width=48>
+								</div>
+								<div class="degree"><span id='day-7'>23</span><sup>o</sup>C</div>
+								<small id='day7'>18<sup>o</sup></small>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+      
+        {{!-- <p id="message-1"></p>
+        <p id="message-2"></p> --}}
         </div>
-       
-        <p>{{>footer}}</p>
+        <div>
+       <h3 style="text-align: center;">My Google Map</h3>
+       <div class="wrapper">
+       <button onclick="getLocation()" id="btn" class="cur">Get Current Location</button>
+       </div>
+        </div>
+        <br>
+  <div id="map"></div>
+  <script>
+var lati,longi;
+const Day1=document.querySelector('#day-1')
+const Day2=document.querySelector('#day-2')
+const Day3=document.querySelector('#day-3')
+const Day4=document.querySelector('#day-4')
+const Day5=document.querySelector('#day-5')
+const Day6=document.querySelector('#day-6')
+const Day7=document.querySelector('#day-7')
+const Day22=document.querySelector('#day2')
+const Day33=document.querySelector('#day3')
+const Day44=document.querySelector('#day4')
+const Day55=document.querySelector('#day5')
+const Day66=document.querySelector('#day6')
+const Day77=document.querySelector('#day7')
+const Wind1=document.querySelector('#wind-1')
+const Loc=document.querySelector('#loc')
+
+const weatherMap=document.querySelector('#map');
+//const messageone=document.querySelector('#message-1');
+//const messagetwo=document.querySelector('#message-2');
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+  lati=position.coords.latitude;
+  longi=position.coords.longitude;
+  
+//messageone.textContent='Loading...'
+//messagetwo.textContent=''
+fetch('/weather?address='+longi+','+lati).then((response)=>{
+    response.json().then((data)=>{
+        if(data.error)
+        {
+            //messageone.textContent=data.error
+        alert(data.error)
+        }
+        else{
+            //messageone.textContent=data.location
+            //messagetwo.textContent=data.forecast
+            //console.log(data.location)
+            //console.log(data.forecast)
+            Day1.textContent=parseInt(data.temp1)
+            Wind1.textContent=parseInt(data.wind)
+            Loc.textContent=data.location
+            Day2.textContent=parseInt(data.temp2h)
+            Day22.textContent=parseInt(data.temp2l)
+            Day3.textContent=parseInt(data.temp3h)
+            Day33.textContent=parseInt(data.temp3l)
+            Day4.textContent=parseInt(data.temp4h)
+            Day44.textContent=parseInt(data.temp4l)
+            Day5.textContent=parseInt(data.temp5h)
+            Day55.textContent=parseInt(data.temp5l)
+            Day6.textContent=parseInt(data.temp6h)
+            Day66.textContent=parseInt(data.temp6l)
+            Day7.textContent=parseInt(data.temp7h)
+            Day77.textContent=parseInt(data.temp7l)
+        }
+    })
+})
+}
+  function initMap(){
+      // Map options
+      var options = {
+        zoom:8,
+        center:{lat:23.2599,lng:77.4126}
+      }
+
+      // New map
+      var map = new google.maps.Map(document.getElementById('map'), options);
+
+      // Listen for click on map
+      google.maps.event.addListener(map, 'click', function(e){
+        // Add marker
+        addMarker({coords:e.latLng});
+        var myLatLng = e.latLng;
+     lati = myLatLng.lat();
+     longi = myLatLng.lng();
+     //weatherMap.addEventListener('click',(e)=>{
+    //e.preventDefault()
+//messageone.textContent='Loading...'
+//messagetwo.textContent=''
+fetch('/weather?address='+longi+','+lati).then((response)=>{
+    response.json().then((data)=>{
+        if(data.error)
+        {
+            //messageone.textContent=data.error
+        alert(data.error)
+        }
+        else{
+            //messageone.textContent=data.location
+            //messagetwo.textContent=data.forecast
+            //console.log(data.location)
+            //console.log(data.forecast)
+            Day1.textContent=parseInt(data.temp1)
+            Wind1.textContent=parseInt(data.wind)
+            Loc.textContent=data.location
+            Day2.textContent=parseInt(data.temp2h)
+            Day22.textContent=parseInt(data.temp2l)
+            Day3.textContent=parseInt(data.temp3h)
+            Day33.textContent=parseInt(data.temp3l)
+            Day4.textContent=parseInt(data.temp4h)
+            Day44.textContent=parseInt(data.temp4l)
+            Day5.textContent=parseInt(data.temp5h)
+            Day55.textContent=parseInt(data.temp5l)
+            Day6.textContent=parseInt(data.temp6h)
+            Day66.textContent=parseInt(data.temp6l)
+            Day7.textContent=parseInt(data.temp7h)
+            Day77.textContent=parseInt(data.temp7l)
+        }
+    })
+})
+});
+
+
+
+      var markers = [
+        {
+          coords:{lat:23.2599,lng:77.4126},
+          iconImage:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+          content:'<h2>Bhopal jn</h2>'
+        },
+        {
+          coords:{lat:23.5236,lng:77.8140},
+          content:'<h2>Vidisha</h>'
+        },
+        {
+          coords:{lat:22.7196,lng:75.8577}
+        }
+      ];
+
+      // Loop through markers
+      for(var i = 0;i < markers.length;i++){
+        // Add marker
+        addMarker(markers[i]);
+      }
+
+      // Add Marker Function
+      function addMarker(props){
+        var marker = new google.maps.Marker({
+          position:props.coords,
+          map:map,
+          //icon:props.iconImage
+        });
+
+        // Check for customicon
+        if(props.iconImage){
+          // Set icon image
+          marker.setIcon(props.iconImage);
+        }
+
+        // Check content
+        if(props.content){
+          var infoWindow = new google.maps.InfoWindow({
+            content:props.content
+          });
+
+          marker.addListener('click', function(){
+            infoWindow.open(map, marker);
+          });
+        }
+      }
+    }  
+     
+  </script>
+     
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATyg2fUHEF60L9-BcenpjB5L7NgRb1mmM&callback=initMap">
+    </script>
+        
     </body>
 </html>
