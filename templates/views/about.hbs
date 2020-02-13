@@ -8,13 +8,12 @@
     <body>
         <div class="main-content">
  {{>headers}}
- <script src="/js/app.js"></script>
         <div class="forecast-table">
 				<div class="container">
 					<div class="forecast-container">
 						<div class="today forecast">
 							<div class="forecast-header">
-								<div class="day">Monday</div>
+								<div class="day" id='mon'>Monday</div>
 								<div class="date">6 Oct</div>
 							</div> <!-- .forecast-header -->
 							<div class="forecast-content">
@@ -25,14 +24,14 @@
 										<img src="img/icons/icon-1.svg" alt="" width=90>
 									</div>	
 								</div>
-								<span><img src="img/icon-umberella.png" alt="">20%</span>
+								<span><img src="img/icon-umberella.png" alt=""><span id='rain'>20</span>%</span>
 								<span><img src="img/icon-wind.png" alt=""><span id='wind-1'>18</span>km/h</span>
 								<span><img src="img/icon-compass.png" alt="">East</span>
 							</div>
 						</div>
 						<div class="forecast">
 							<div class="forecast-header">
-								<div class="day">Tuesday</div>
+								<div class="day" id='tue'>Tuesday</div>
 							</div> <!-- .forecast-header -->
 							<div class="forecast-content">
 								<div class="forecast-icon">
@@ -44,7 +43,7 @@
 						</div>
 						<div class="forecast">
 							<div class="forecast-header">
-								<div class="day">Wednesday</div>
+								<div class="day" id='wed'>Wednesday</div>
 							</div> <!-- .forecast-header -->
 							<div class="forecast-content">
 								<div class="forecast-icon">
@@ -56,7 +55,7 @@
 						</div>
 						<div class="forecast">
 							<div class="forecast-header">
-								<div class="day">Thursday</div>
+								<div class="day" id='thu'>Thursday</div>
 							</div> <!-- .forecast-header -->
 							<div class="forecast-content">
 								<div class="forecast-icon">
@@ -68,7 +67,7 @@
 						</div>
 						<div class="forecast">
 							<div class="forecast-header">
-								<div class="day">Friday</div>
+								<div class="day" id='fri'>Friday</div>
 							</div> <!-- .forecast-header -->
 							<div class="forecast-content">
 								<div class="forecast-icon">
@@ -80,7 +79,7 @@
 						</div>
 						<div class="forecast">
 							<div class="forecast-header">
-								<div class="day">Saturday</div>
+								<div class="day" id='sat'>Saturday</div>
 							</div> <!-- .forecast-header -->
 							<div class="forecast-content">
 								<div class="forecast-icon">
@@ -92,7 +91,7 @@
 						</div>
 						<div class="forecast">
 							<div class="forecast-header">
-								<div class="day">Sunday</div>
+								<div class="day" id='sun'>Sunday</div>
 							</div> <!-- .forecast-header -->
 							<div class="forecast-content">
 								<div class="forecast-icon">
@@ -117,7 +116,52 @@
         </div>
         <br>
   <div id="map"></div>
+  {{!-- <script src="/js/app.js"></script> --}}
   <script>
+    function month(c) {
+    if(c==0) 
+        return 'Jan'
+    if(c==1) 
+        return 'Feb'
+    if(c==2) 
+        return 'Mar'
+    if(c==3) 
+        return 'Apr'
+    if(c==4) 
+        return 'May'
+    if(c==5) 
+        return 'June'
+    if(c==6) 
+        return 'July'
+    if(c==7) 
+        return 'Aug'
+    if(c==8) 
+        return 'Sep'
+    if(c==9) 
+        return 'Oct'
+    if(c==10) 
+        return 'Nov'
+    if(c==11) 
+        return 'Dec'
+
+}
+function day(c) {
+    if(c==1) 
+        return 'Monday'
+    if(c==2) 
+        return 'Tuesday'
+    if(c==3) 
+        return 'Wednesday'
+    if(c==4) 
+        return 'Thrusday'
+    if(c==5) 
+        return 'Friday'
+    if(c==6) 
+        return 'Saturday'
+    if(c==0) 
+        return 'Sunday'
+}
+
 var lati,longi;
 const Day1=document.querySelector('#day-1')
 const Day2=document.querySelector('#day-2')
@@ -132,8 +176,29 @@ const Day44=document.querySelector('#day4')
 const Day55=document.querySelector('#day5')
 const Day66=document.querySelector('#day6')
 const Day77=document.querySelector('#day7')
+const Mon=document.querySelector('#mon')
+const Tue=document.querySelector('#tue')
+const Wed=document.querySelector('#wed')
+const Thu=document.querySelector('#thu')
+const Fri=document.querySelector('#fri')
+const Sat=document.querySelector('#sat')
+const Sun=document.querySelector('#sun')
 const Wind1=document.querySelector('#wind-1')
 const Loc=document.querySelector('#loc')
+const Rain=document.querySelector('#rain')
+//const Dat=document.querySelector('#date')
+var de=new Date();
+//Dat.textContent=de.getDate()+' '+month(de.getMonth());
+function setDay() {
+    Mon.textContent=day(de.getDay())
+    Tue.textContent=day((de.getDay()+1)%7)
+    Wed.textContent=day((de.getDay()+2)%7)
+    Thu.textContent=day((de.getDay()+3)%7)
+    Fri.textContent=day((de.getDay()+4)%7)
+    Sat.textContent=day((de.getDay()+5)%7)
+    Sun.textContent=day((de.getDay()+6)%7)
+}
+
 
 const weatherMap=document.querySelector('#map');
 //const messageone=document.querySelector('#message-1');
@@ -164,6 +229,8 @@ fetch('/weather?address='+longi+','+lati).then((response)=>{
             //messagetwo.textContent=data.forecast
             //console.log(data.location)
             //console.log(data.forecast)
+            setDay();
+            Rain.textContent=data.rain
             Day1.textContent=parseInt(data.temp1)
             Wind1.textContent=parseInt(data.wind)
             Loc.textContent=data.location
@@ -194,10 +261,10 @@ fetch('/weather?address='+longi+','+lati).then((response)=>{
       var map = new google.maps.Map(document.getElementById('map'), options);
 
       // Listen for click on map
-      google.maps.event.addListener(map, 'click', function(e){
+      google.maps.event.addListener(map, 'click', function(e1){
         // Add marker
-        addMarker({coords:e.latLng});
-        var myLatLng = e.latLng;
+        addMarker({coords:e1.latLng});
+        var myLatLng = e1.latLng;
      lati = myLatLng.lat();
      longi = myLatLng.lng();
      //weatherMap.addEventListener('click',(e)=>{
@@ -216,6 +283,8 @@ fetch('/weather?address='+longi+','+lati).then((response)=>{
             //messagetwo.textContent=data.forecast
             //console.log(data.location)
             //console.log(data.forecast)
+            setDay();
+            Rain.textContent=data.rain
             Day1.textContent=parseInt(data.temp1)
             Wind1.textContent=parseInt(data.wind)
             Loc.textContent=data.location
