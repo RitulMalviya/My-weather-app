@@ -1,0 +1,26 @@
+body {  background-color: #CBC7C7;  background-repeat:repeat-x; margin-left:0pt; margin-right:0pt;margin-top:10pt;margin-bottom:0pt }
+
+.header {padding:0; }
+
+.container {border: 2px solid #FFFFFF}
+.main {background-color:#FFFFFF; height:400}
+.navbar {background:#EDEBEC; height:40px;border-bottom:1px solid #DBDBDB}
+.topmenu a {font-family:arial, verdana; font-size:10pt;padding:10;border-right:1px solid #C5BBBB}
+.box{background:#FFFFFF; border: 1px solid #27654A;  margin:10}
+.mid  { background-color: #DCF8DA }
+.myform {margin:5; border: 4px solid #DED6D4; background:#F0EDEC}
+.myform th {background:#DED6D4;color:#5C433A; font-family:arial, verdana; font-size:10pt;padding:4}
+.myform td {font-family:verdana, arial; font-size:9pt}
+.text { Border-top: 1px solid #FFFFFF; Border-bottom: 1px solid #FFFFFF; font-family: Verdana, Arial; font-size: 9pt; color: #000000; text-align:Justify; padding:5px}
+.title {  font-family:  Times New Roman; font-size: 16pt; font-weight: bold;color:#603322;border-bottom:1px solid #D7CDC9;padding:3 }
+.grid { border: 1px solid #DBDBDB; background:#F3F3F3; font-family: arial,verdana; font-size: 9pt; color: #394351;  padding:5}
+.gridm { border: 1px solid #44A87F;  font-family: arial,verdana; font-size: 9pt; color: #000000;  padding:4}
+.pic {border:4px solid #FFFFFF}
+.footer {background:#EDEBEC;  font-family: arial,verdana; font-size: 9pt; color: #482A2A;  padding:4}
+a {  color: #5A4C46 }
+a:hover {color:#A54F25;font-weight:bold}
+input {font-family:verdana;font-size:9pt;padding:3px}
+select {font-family:verdana;font-size:9pt;padding:3px}
+textarea {font-family:verdana;font-size:9pt;padding:3px}
+.mybutton { font-family:verdana;font-size:10pt;padding:3px}
+

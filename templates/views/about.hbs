@@ -14,12 +14,12 @@
 						<div class="today forecast">
 							<div class="forecast-header">
 								<div class="day" id='mon'>Monday</div>
-								<div class="date">6 Oct</div>
+								<div id="date" class="date">6 Oct</div>
 							</div> <!-- .forecast-header -->
 							<div class="forecast-content">
-								<div class="location" id='loc'>New York</div>
+								<div class="location" id='loc'>Loading...</div>
 								<div class="degree">
-									<div class="num"><span id='day-1'>23</span><sup>o</sup>C</div>
+									<div class="num"><span id='day-1'></span><sup>o</sup>C</div>
 									<div class="forecast-icon">
 										<img src="img/icons/icon-1.svg" alt="" width=90>
 									</div>	
@@ -37,8 +37,8 @@
 								<div class="forecast-icon">
 									<img src="img/icons/icon-3.svg" alt="" width=48>
 								</div>
-								<div class="degree"><span id='day-2'>23</span><sup>o</sup>C</div>
-								<small id='day2'>18<sup>o</sup></small>
+								<div class="degree"><span id='day-2'></span><sup>o</sup>C</div>
+								<small><span id='day2'></span><sup>o</sup>C</small>
 							</div>
 						</div>
 						<div class="forecast">
@@ -49,8 +49,8 @@
 								<div class="forecast-icon">
 									<img src="img/icons/icon-5.svg" alt="" width=48>
 								</div>
-								<div class="degree"><span id='day-3'>23</span><sup>o</sup>C</div>
-								<small id='day3'>18<sup>o</sup></small>
+								<div class="degree"><span id='day-3'></span><sup>o</sup>C</div>
+								<small><span id='day3'></span><sup>o</sup>C</small>
 							</div>
 						</div>
 						<div class="forecast">
@@ -61,8 +61,9 @@
 								<div class="forecast-icon">
 									<img src="img/icons/icon-7.svg" alt="" width=48>
 								</div>
-								<div class="degree"><span id='day-4'>23</span><sup>o</sup>C</div>
-								<small id='day4'>18<sup>o</sup></small>
+								<div class="degree"><span id='day-4'></span><sup>o</sup>C</div>
+								<small><span id='day4'></span><sup>o</sup>C</small>
+	
 							</div>
 						</div>
 						<div class="forecast">
@@ -73,8 +74,9 @@
 								<div class="forecast-icon">
 									<img src="img/icons/icon-12.svg" alt="" width=48>
 								</div>
-								<div class="degree"><span id='day-5'>23</span><sup>o</sup>C</div>
-								<small id='day5'>18<sup>o</sup></small>
+								<div class="degree"><span id='day-5'></span><sup>o</sup>C</div>
+								<small><span id='day5'></span><sup>o</sup>C</small>
+	
 							</div>
 						</div>
 						<div class="forecast">
@@ -85,8 +87,8 @@
 								<div class="forecast-icon">
 									<img src="img/icons/icon-13.svg" alt="" width=48>
 								</div>
-								<div class="degree"><span id='day-6'>23</span><sup>o</sup>C</div>
-								<small id='day6'>18<sup>o</sup></small>
+								<div class="degree"><span id='day-6'></span><sup>o</sup>C</div>
+								<small><span id='day6'></span><sup>o</sup>C</small>
 							</div>
 						</div>
 						<div class="forecast">
@@ -97,8 +99,8 @@
 								<div class="forecast-icon">
 									<img src="img/icons/icon-14.svg" alt="" width=48>
 								</div>
-								<div class="degree"><span id='day-7'>23</span><sup>o</sup>C</div>
-								<small id='day7'>18<sup>o</sup></small>
+								<div class="degree"><span id='day-7'></span><sup>o</sup>C</div>
+								<small><span id='day7'></span><sup>o</sup>C</small>
 							</div>
 						</div>
 					</div>
@@ -186,9 +188,9 @@ const Sun=document.querySelector('#sun')
 const Wind1=document.querySelector('#wind-1')
 const Loc=document.querySelector('#loc')
 const Rain=document.querySelector('#rain')
-//const Dat=document.querySelector('#date')
+const Dat=document.querySelector('#date')
 var de=new Date();
-//Dat.textContent=de.getDate()+' '+month(de.getMonth());
+Dat.textContent=de.getDate()+' '+month(de.getMonth());
 function setDay() {
     Mon.textContent=day(de.getDay())
     Tue.textContent=day((de.getDay()+1)%7)
@@ -198,7 +200,45 @@ function setDay() {
     Sat.textContent=day((de.getDay()+5)%7)
     Sun.textContent=day((de.getDay()+6)%7)
 }
-
+window.onload=(e) =>{
+    e.preventDefault()
+    const location='bhopal'
+// messageOne.textContent='Loading...'
+// messageTwo.textContent=''
+fetch('/weather?address='+location).then((response)=>{
+    response.json().then((data)=>{
+        if(data.error)
+        {
+            // messageOne.textContent=data.error
+        alert(data.error)
+        }
+        else{
+            // messageOne.textContent=data.location
+            // messageTwo.textContent=data.forecast
+            setDay();
+            Rain.textContent=data.rain
+            Dat.textContent=de.getDate()+' '+month(de.getMonth())
+            Day1.textContent=parseInt(data.temp1)
+            Wind1.textContent=parseInt(data.wind)
+            Loc.textContent=data.location
+            Day2.textContent=parseInt(data.temp2h)
+            Day22.textContent=parseInt(data.temp2l)
+            Day3.textContent=parseInt(data.temp3h)
+            Day33.textContent=parseInt(data.temp3l)
+            Day4.textContent=parseInt(data.temp4h)
+            Day44.textContent=parseInt(data.temp4l)
+            Day5.textContent=parseInt(data.temp5h)
+            Day55.textContent=parseInt(data.temp5l)
+            Day6.textContent=parseInt(data.temp6h)
+            Day66.textContent=parseInt(data.temp6l)
+            Day7.textContent=parseInt(data.temp7h)
+            Day77.textContent=parseInt(data.temp7l)
+            //console.log(data.location)
+            //console.log(data.forecast)
+        }
+    })
+})
+}
 
 const weatherMap=document.querySelector('#map');
 //const messageone=document.querySelector('#message-1');
@@ -229,7 +269,7 @@ fetch('/weather?address='+longi+','+lati).then((response)=>{
             //messagetwo.textContent=data.forecast
             //console.log(data.location)
             //console.log(data.forecast)
-            setDay();
+            //setDay();
             Rain.textContent=data.rain
             Day1.textContent=parseInt(data.temp1)
             Wind1.textContent=parseInt(data.wind)
@@ -283,7 +323,7 @@ fetch('/weather?address='+longi+','+lati).then((response)=>{
             //messagetwo.textContent=data.forecast
             //console.log(data.location)
             //console.log(data.forecast)
-            setDay();
+            //setDay();
             Rain.textContent=data.rain
             Day1.textContent=parseInt(data.temp1)
             Wind1.textContent=parseInt(data.wind)
